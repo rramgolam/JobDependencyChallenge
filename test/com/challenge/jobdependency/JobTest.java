@@ -45,12 +45,23 @@ public class JobTest {
     }
 
     @Test
-    public void convertSingletonWithDependencyToStringObjects() {
+    public void convertSingletonWithDependencyStringToObjects() {
         String ab = "a => b";
         List<Job> aJob = JobFactory.extractJobs(ab);
 
         assertEquals("a", aJob.get(0).getId());
         assertEquals("b", aJob.get(1).getId());
+    }
+
+    @Test
+    public void convertListOfSingletonsWithoutDependenciesStringToObjects() {
+        String abc = "a =>,b =>,c =>";
+
+        List<Job> aJob = JobFactory.extractJobs(abc);
+
+        assertEquals("a", aJob.get(0).getId());
+        assertEquals("b", aJob.get(1).getId());
+        assertEquals("c", aJob.get(2).getId());
     }
 
 

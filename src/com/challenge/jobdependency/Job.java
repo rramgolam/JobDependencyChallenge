@@ -20,4 +20,13 @@ public class Job {
     public Job getDependency() {
         return dependency;
     }
+
+    public boolean hasDependency() {
+        return dependency != null;
+    }
+
+    @Override
+    public String toString() {
+        return hasDependency() ? getId() + " => " + getDependency() : getId();
+    }
 }
