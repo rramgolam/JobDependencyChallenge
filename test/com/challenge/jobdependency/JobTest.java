@@ -22,5 +22,18 @@ public class JobTest {
         assertEquals('b', root.getDependency().getId());
     }
 
+    @Test
+    public void createAChainedJobDependency() {
+        Job a = JobFactory.createJob('a');
+        Job b = JobFactory.createJob('b');
+        Job c = JobFactory.createJob('c');
+        a.setDependency(b);
+        b.setDependency(c);
+
+        assertEquals('b', a.getDependency().getId());
+        assertEquals('c', b.getDependency().getId());
+
+    }
+
 
 }
