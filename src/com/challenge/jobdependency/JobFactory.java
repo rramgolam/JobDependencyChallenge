@@ -16,18 +16,23 @@ public class JobFactory {
         List<Job> extractedJobs = new ArrayList<>();
         input.replaceAll(" ", "");
 
-        String regEx = "(.*)=>*(.*)";
+        String regEx = "(.*)=>(.*)";
         Pattern textPattern = Pattern.compile(regEx);
         Matcher textMatcher = textPattern.matcher(input);
 
         String first = null;
+        String dependency = null;
         while(textMatcher.find()) {
             //System.out.println("Occurrence: " + textMatcher.group(0) + " , " + textMatcher.group(1) + textMatcher.group(2));
             first = textMatcher.group(1).strip();
+            extractedJobs.add(new Job(first));
+
+            if (textMatcher.group(2).strip() != null) {
+                dependency = textMatcher.group(2).strip();
+                extractedJobs.add(new Job(dependency));
+            }
         }
 
-        Job primary = new Job(first);
-        extractedJobs.add(primary);
         return extractedJobs;
     }
 }

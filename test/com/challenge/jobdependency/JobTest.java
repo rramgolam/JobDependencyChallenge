@@ -12,7 +12,7 @@ public class JobTest {
     public void createJobWithNoDependency() {
         Job singular = JobFactory.createJob("a");
 
-        assertEquals('a', singular.getId());
+        assertEquals("a", singular.getId());
     }
 
     @Test
@@ -21,7 +21,7 @@ public class JobTest {
         Job dependency = JobFactory.createJob("b");
         root.setDependency(dependency);
 
-        assertEquals('b', root.getDependency().getId());
+        assertEquals("b", root.getDependency().getId());
     }
 
     @Test
@@ -32,8 +32,8 @@ public class JobTest {
         a.setDependency(b);
         b.setDependency(c);
 
-        assertEquals('b', a.getDependency().getId());
-        assertEquals('c', b.getDependency().getId());
+        assertEquals("b", a.getDependency().getId());
+        assertEquals("c", b.getDependency().getId());
     }
 
     @Test
@@ -42,6 +42,15 @@ public class JobTest {
         List<Job> aJob = JobFactory.extractJobs(a);
 
         assertEquals("a", aJob.get(0).getId());
+    }
+
+    @Test
+    public void convertSingletonWithDependencyToStringObjects() {
+        String ab = "a => b";
+        List<Job> aJob = JobFactory.extractJobs(ab);
+
+        assertEquals("a", aJob.get(0).getId());
+        assertEquals("b", aJob.get(1).getId());
     }
 
 
