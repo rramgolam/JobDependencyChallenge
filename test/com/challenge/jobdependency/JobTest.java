@@ -64,5 +64,20 @@ public class JobTest {
         assertEquals("c", aJob.get(2).getId());
     }
 
+    @Test
+    public void convertListOfSingletonsWithDependenciesToObjects() {
+        String abcc = "a =>,b => c,c =>";
+
+        List<Job> aJob = JobFactory.extractJobs(abcc);
+
+
+        assertEquals("a", aJob.get(0).getId());
+        assertEquals("b", aJob.get(1).getId());
+        assertEquals("c", aJob.get(2).getId());
+
+        assertTrue(aJob.get(1).hasDependency());
+        assertSame(aJob.get(1).getDependency(), aJob.get(2));
+    }
+
 
 }
