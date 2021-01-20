@@ -3,14 +3,31 @@ package com.challenge.jobdependency;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JobFactory {
 
-    public static Job createJob(char id) {
+    public static Job createJob(String id) {
         return new Job(id);
     }
 
     public static List<Job> extractJobs(String input) {
-        return Arrays.asList(new Job('a'));
+        List<Job> extractedJobs = new ArrayList<>();
+        input.replaceAll(" ", "");
+
+        String regEx = "(.*)=>*(.*)";
+        Pattern textPattern = Pattern.compile(regEx);
+        Matcher textMatcher = textPattern.matcher(input);
+
+        String first = null;
+        while(textMatcher.find()) {
+            //System.out.println("Occurrence: " + textMatcher.group(0) + " , " + textMatcher.group(1) + textMatcher.group(2));
+            first = textMatcher.group(1).strip();
+        }
+
+        Job primary = new Job(first);
+        extractedJobs.add(primary);
+        return extractedJobs;
     }
 }

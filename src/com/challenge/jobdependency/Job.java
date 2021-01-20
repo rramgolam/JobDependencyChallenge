@@ -2,14 +2,14 @@ package com.challenge.jobdependency;
 
 public class Job {
 
-    private char id;
+    private String id;
     private Job dependency = null;
 
-    public Job(char id) {
+    public Job(String id) {
         this.id = id;
     }
 
-    public char getId() {
+    public String getId() {
         return this.id;
     }
 
