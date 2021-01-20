@@ -32,7 +32,11 @@ public class JobTest {
 
         assertEquals('b', a.getDependency().getId());
         assertEquals('c', b.getDependency().getId());
+    }
 
+    @Test
+    public void convertSingleJobStringToObject() {
+        fail("Require implementation.");
     }
 
 
