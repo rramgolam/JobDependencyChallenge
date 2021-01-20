@@ -1,8 +1,10 @@
 package com.challenge.jobdependency;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class JobTest {
 
@@ -35,8 +37,12 @@ public class JobTest {
     }
 
     @Test
-    public void convertSingleJobStringToObject() {
-        fail("Require implementation.");
+    public void convertSingletonJobStringToObject() {
+        String a = "a =>";
+
+        List<Job> aJob = JobFactory.extractJobs(a);
+
+        assertEquals('a', aJob.get(0).getId());
     }
 
 
