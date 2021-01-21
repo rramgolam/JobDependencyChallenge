@@ -1,10 +1,6 @@
 package com.challenge.jobdependency;
 
-import org.w3c.dom.Node;
-
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 public class JobScheduler {
@@ -26,9 +22,9 @@ public class JobScheduler {
     }
 
 
-    private static boolean hasCycle(Job first) {
-        Job fast = first;
-        Job slow = first;
+    private static boolean hasCycle(Job head) {
+        Job fast = head;
+        Job slow = head;
 
         while(fast != null && fast.getDependency() != null) {
             slow = slow.getDependency();                            // 1 hop ahead

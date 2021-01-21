@@ -83,9 +83,7 @@ public class JobTest {
         String structure = "a =>,b => c,c => f,d => a,e => b,f =>";
 
         List<Job> jobs = JobFactory.extractJobs(structure);
-//        for (Job job : aJob) {
-//            System.out.println(job.getId());
-//        }
+
         assertEquals("c", jobs.get(1).getDependency().getId()); // b depends on c
         assertEquals("f", jobs.get(2).getDependency().getId()); // c depends on f
         assertEquals("a", jobs.get(4).getDependency().getId()); // d depends on a
