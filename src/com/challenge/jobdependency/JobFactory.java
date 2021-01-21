@@ -21,7 +21,7 @@ public class JobFactory {
             extractJobs(line, extractedJobs);
         }
 
-        extractedJobs.forEach(System.out::println);
+        //extractedJobs.forEach(System.out::println);
 
         return extractedJobs;
     }

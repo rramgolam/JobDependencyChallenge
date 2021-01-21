@@ -39,43 +39,59 @@ public class JobTest {
     @Test
     public void convertSingletonJobStringToObject() {
         String a = "a =>";
-        List<Job> aJob = JobFactory.extractJobs(a);
+        List<Job> job = JobFactory.extractJobs(a);
 
-        assertEquals("a", aJob.get(0).getId());
+        assertEquals("a", job.get(0).getId());
     }
 
     @Test
     public void convertSingletonWithDependencyStringToObjects() {
         String ab = "a => b";
-        List<Job> aJob = JobFactory.extractJobs(ab);
+        List<Job> jobs = JobFactory.extractJobs(ab);
 
-        assertEquals("a", aJob.get(0).getId());
-        assertEquals("b", aJob.get(1).getId());
+        assertEquals("a", jobs.get(0).getId());
+        assertEquals("b", jobs.get(1).getId());
     }
 
     @Test
     public void convertListOfSingletonsWithoutDependenciesStringToObjects() {
         String abc = "a =>,b =>,c =>";
 
-        List<Job> aJob = JobFactory.extractJobs(abc);
+        List<Job> jobs = JobFactory.extractJobs(abc);
 
-        assertEquals("a", aJob.get(0).getId());
-        assertEquals("b", aJob.get(1).getId());
-        assertEquals("c", aJob.get(2).getId());
+        assertEquals("a", jobs.get(0).getId());
+        assertEquals("b", jobs.get(1).getId());
+        assertEquals("c", jobs.get(2).getId());
     }
 
     @Test
     public void convertListOfSingletonsWithDependenciesToObjects() {
         String abcc = "a =>,b => c,c =>";
 
-        List<Job> aJob = JobFactory.extractJobs(abcc);
+        List<Job> jobs = JobFactory.extractJobs(abcc);
 
-        assertEquals("a", aJob.get(0).getId());
-        assertEquals("b", aJob.get(1).getId());
-        assertEquals("c", aJob.get(2).getId());
+        assertEquals("a", jobs.get(0).getId());
+        assertEquals("b", jobs.get(1).getId());
+        assertEquals("c", jobs.get(2).getId());
 
-        assertTrue(aJob.get(1).hasDependency());
-        assertSame(aJob.get(1).getDependency(), aJob.get(2));
+        assertTrue(jobs.get(1).hasDependency());
+        assertSame(jobs.get(1).getDependency(), jobs.get(2));
+    }
+
+    @Test
+    public void convertLongListOfSingletonsWithValidDepencenciesToObjects() {
+        String structure = "a =>,b => c,c => f,d => a,e => b,f =>";
+
+        List<Job> jobs = JobFactory.extractJobs(structure);
+//        for (Job job : aJob) {
+//            System.out.println(job.getId());
+//        }
+        assertEquals("c", jobs.get(1).getDependency().getId()); // b depends on c
+        assertEquals("f", jobs.get(2).getDependency().getId()); // c depends on f
+        assertEquals("a", jobs.get(4).getDependency().getId()); // d depends on a
+        assertEquals("b", jobs.get(5).getDependency().getId()); // e depends on b
+        assertFalse(jobs.get(0).hasDependency());                       //a
+        assertFalse(jobs.get(3).hasDependency());                       //f
     }
 
 
