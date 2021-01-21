@@ -9,6 +9,7 @@ public class JobScheduler {
 
         List<Job> jobSequence = new ArrayList<>();
 
+        // validity checks
         for (Job job : jobs) {
             if (job.getDependency() != null && job.getDependency().equals(job))
                 throw new SelfDependingJobException("Self dependence found.");
@@ -36,7 +37,6 @@ public class JobScheduler {
 
     public static List<Job> sortJobs(List<Job> jobs) {
         List<Job> result = new ArrayList<>();
-        // go through each job
 
         for (Job job : jobs) {
 
@@ -46,9 +46,9 @@ public class JobScheduler {
             if (job.hasDependency()) {
                 if (result.contains(job.getDependency())) {
                     int indexOfDep = result.indexOf(job.getDependency());
-                    if (indexOfDep > result.indexOf(job))       // check if already ordered
+                    if (indexOfDep > result.indexOf(job))           // check if already ordered
                     {
-                        result.add(indexOfDep, job);            // prepend existing
+                        result.add(indexOfDep, job);                // prepend existing
                         result.remove(result.lastIndexOf(job));
                     }
 
@@ -63,9 +63,9 @@ public class JobScheduler {
         return result;
     }
 
-//    public static void printJobs(List<Job> jobs) {
-//        jobs.forEach(System.out::println);
-//    }
+    public static void printJobsWithDependencies(List<Job> jobs) {
+        jobs.forEach(System.out::println);
+    }
 
     public static void printAllJobs(List<Job> jobs) {
         for (Job job : jobs) {

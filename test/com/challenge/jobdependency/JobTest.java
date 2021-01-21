@@ -39,7 +39,7 @@ public class JobTest {
     @Test
     public void convertSingletonJobStringToObject() {
         String a = "a =>";
-        List<Job> job = JobFactory.extractJobs(a);
+        List<Job> job = JobFactory.getJobs(a);
 
         assertEquals("a", job.get(0).getId());
     }
@@ -47,7 +47,7 @@ public class JobTest {
     @Test
     public void convertSingletonWithDependencyStringToObjects() {
         String ab = "a => b";
-        List<Job> jobs = JobFactory.extractJobs(ab);
+        List<Job> jobs = JobFactory.getJobs(ab);
 
         assertEquals("a", jobs.get(0).getId());
         assertEquals("b", jobs.get(1).getId());
@@ -57,7 +57,7 @@ public class JobTest {
     public void convertListOfSingletonsWithoutDependenciesStringToObjects() {
         String abc = "a =>,b =>,c =>";
 
-        List<Job> jobs = JobFactory.extractJobs(abc);
+        List<Job> jobs = JobFactory.getJobs(abc);
 
         assertEquals("a", jobs.get(0).getId());
         assertEquals("b", jobs.get(1).getId());
@@ -68,7 +68,7 @@ public class JobTest {
     public void convertListOfSingletonsWithDependenciesToObjects() {
         String abcc = "a =>,b => c,c =>";
 
-        List<Job> jobs = JobFactory.extractJobs(abcc);
+        List<Job> jobs = JobFactory.getJobs(abcc);
 
         assertEquals("a", jobs.get(0).getId());
         assertEquals("b", jobs.get(1).getId());
@@ -82,7 +82,7 @@ public class JobTest {
     public void convertLongListOfSingletonsWithValidDepencenciesToObjects() {
         String structure = "a =>,b => c,c => f,d => a,e => b,f =>";
 
-        List<Job> jobs = JobFactory.extractJobs(structure);
+        List<Job> jobs = JobFactory.getJobs(structure);
 
         assertEquals("c", jobs.get(1).getDependency().getId()); // b depends on c
         assertEquals("f", jobs.get(2).getDependency().getId()); // c depends on f

@@ -11,7 +11,7 @@ public class SchedulerTest {
 
     @Test
     public void testSequenceConsistingOfASingleJob() throws Exception {
-        List<Job> jobs = JobFactory.extractJobs("a =>");
+        List<Job> jobs = JobFactory.getJobs("a =>");
 
         List<Job> result = JobScheduler.getJobSequence(jobs);
         assertEquals(1, result.size());
@@ -25,7 +25,7 @@ public class SchedulerTest {
         Job b = new Job("b");
         Job c = new Job("c");
 
-        List<Job> jobs = JobFactory.extractJobs("a =>,b =>,c =>");
+        List<Job> jobs = JobFactory.getJobs("a =>,b =>,c =>");
         List<Job> result = JobScheduler.getJobSequence(jobs);
 
         assertEquals(a, jobs.get(0));
@@ -37,7 +37,7 @@ public class SchedulerTest {
     public void testJobsCannotDependOnThemselves()
             throws SelfDependingJobException, CircularJobDependencyException {
         String failingCase = "a =>,b =>,c => c";
-        List<Job> jobs = JobFactory.extractJobs(failingCase);
+        List<Job> jobs = JobFactory.getJobs(failingCase);
 
         JobScheduler.getJobSequence(jobs);
     }
@@ -46,7 +46,7 @@ public class SchedulerTest {
     public void testJobsCannotContainCircularDependencies()
             throws CircularJobDependencyException, SelfDependingJobException {
         String failingCase = "a =>,b => c,c => f,d => a,e =>,f => b";
-        List<Job> jobs = JobFactory.extractJobs(failingCase);
+        List<Job> jobs = JobFactory.getJobs(failingCase);
 
         JobScheduler.getJobSequence(jobs);
     }
@@ -55,7 +55,7 @@ public class SchedulerTest {
     public void testJobsWithoutContainCircularDependencies()
             throws CircularJobDependencyException, SelfDependingJobException {
         String failingCase = "a =>,b => c,c => f,d => a,e => b,f =>";
-        List<Job> jobs = JobFactory.extractJobs(failingCase);
+        List<Job> jobs = JobFactory.getJobs(failingCase);
 
         JobScheduler.getJobSequence(jobs);
         //JobScheduler.printJobs(jobs);
@@ -70,7 +70,7 @@ public class SchedulerTest {
         expected.add(new Job("b"));
 
         String validCase = "a =>,b => c,c =>";
-        List<Job> jobs = JobFactory.extractJobs(validCase);
+        List<Job> jobs = JobFactory.getJobs(validCase);
         List<Job> result = JobScheduler.getJobSequence(jobs);
 
         assertEquals(expected, result);
@@ -81,13 +81,15 @@ public class SchedulerTest {
             throws SelfDependingJobException, CircularJobDependencyException {
 
         String validCase = "a =>,b => c,c => f,d => a,e => b,f =>";
-        List<Job> jobs = JobFactory.extractJobs(validCase);
+        List<Job> jobs = JobFactory.getJobs(validCase);
         List<Job> result = JobScheduler.getJobSequence(jobs);
 
         assertTrue(result.indexOf(new Job("f")) < result.indexOf(new Job("c")));
         assertTrue(result.indexOf(new Job("c")) < result.indexOf(new Job("b")));
         assertTrue(result.indexOf(new Job("b")) < result.indexOf(new Job("e")));
         assertTrue(result.indexOf(new Job("a")) < result.indexOf(new Job("d")));
+
+        JobScheduler.printAllJobs(result);
     }
 
 }
