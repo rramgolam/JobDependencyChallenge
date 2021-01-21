@@ -15,7 +15,6 @@ public class JobFactory {
     public static List<Job> extractJobs(String input) {
         List<Job> extractedJobs = new ArrayList<>();
 
-
         String[] lines = input.split(",");
         for (String line : lines) {
             extractJobs(line, extractedJobs);
@@ -40,6 +39,7 @@ public class JobFactory {
             //System.out.println("Occurrence: " + textMatcher.group(0) + " , " + textMatcher.group(1) + textMatcher.group(2));
             first = textMatcher.group(1);
             Job firstJob = new Job(first);
+
             //check if already there
             if (!extractedJobs.contains(firstJob))
             {
@@ -48,16 +48,15 @@ public class JobFactory {
 
             if (textMatcher.group(2).strip() != "") {
                 dependency = textMatcher.group(2);
-
-                if (!extractedJobs.contains(new Job(dependency))) {
-                    extractedJobs.add(new Job(dependency));
+                Job dependant = new Job(dependency);
+                if (!extractedJobs.contains(dependant)) {
+                    extractedJobs.add(dependant);
                 }
 
                 // set the dependency
                 int primary = extractedJobs.indexOf(firstJob);
-                int secondary = extractedJobs.indexOf(new Job(dependency));
+                int secondary = extractedJobs.indexOf(dependant);
                 extractedJobs.get(primary).setDependency(extractedJobs.get(secondary));
-
             }
         }
 

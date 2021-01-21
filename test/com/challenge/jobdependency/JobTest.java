@@ -90,8 +90,8 @@ public class JobTest {
         assertEquals("f", jobs.get(2).getDependency().getId()); // c depends on f
         assertEquals("a", jobs.get(4).getDependency().getId()); // d depends on a
         assertEquals("b", jobs.get(5).getDependency().getId()); // e depends on b
-        assertFalse(jobs.get(0).hasDependency());                       //a
-        assertFalse(jobs.get(3).hasDependency());                       //f
+        assertFalse(jobs.get(0).hasDependency());                       // a
+        assertFalse(jobs.get(3).hasDependency());                       // f
     }
 
 
