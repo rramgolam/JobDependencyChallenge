@@ -31,6 +31,10 @@ public class SchedulerTest {
         assertEquals(a, jobs.get(0));
         assertEquals(b, jobs.get(1));
         assertEquals(c, jobs.get(2));
+    }
 
+    @Test
+    public void testJobsCannotDependOnThemselves() {
+        fail("Requires Impl.");
     }
 }
