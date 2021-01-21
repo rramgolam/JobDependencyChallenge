@@ -94,5 +94,4 @@ public class JobTest {
         assertFalse(jobs.get(3).hasDependency());                       // f
     }
 
-
 }

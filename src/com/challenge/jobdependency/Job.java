@@ -28,11 +28,6 @@ public class Job {
     }
 
     @Override
-    public String toString() {
-        return hasDependency() ? getId() + " => " + getDependency() : getId();
-    }
-
-    @Override
     public boolean equals(Object obj) {
 
         if (obj == this) return true;
@@ -46,5 +41,10 @@ public class Job {
     @Override
     public int hashCode() {
         return this.getId().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return hasDependency() ? getId() + " => " + getDependency() : getId();
     }
 }
