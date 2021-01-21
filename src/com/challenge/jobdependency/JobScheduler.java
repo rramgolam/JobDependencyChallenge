@@ -35,7 +35,7 @@ public class JobScheduler {
         return false;
     }
 
-    public static List<Job> sortJobs(List<Job> jobs) {
+    private static List<Job> sortJobs(List<Job> jobs) {
         List<Job> result = new ArrayList<>();
 
         for (Job job : jobs) {

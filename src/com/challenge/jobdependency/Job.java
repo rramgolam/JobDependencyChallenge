@@ -1,7 +1,5 @@
 package com.challenge.jobdependency;
 
-import java.util.Objects;
-
 public class Job {
 
     private String id;
