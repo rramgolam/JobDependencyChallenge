@@ -2,7 +2,6 @@ package com.challenge.jobdependency;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -19,7 +18,8 @@ public class SchedulerTest {
     }
 
     @Test
-    public void testSequenceConsistingOfMultipleJobs() throws SelfDependingJobException {
+    public void testSequenceConsistingOfMultipleJobs()
+            throws SelfDependingJobException, CircularJobDependencyException {
         Job a = new Job("a");
         Job b = new Job("b");
         Job c = new Job("c");
@@ -33,7 +33,8 @@ public class SchedulerTest {
     }
 
     @Test (expected = SelfDependingJobException.class)
-    public void testJobsCannotDependOnThemselves() throws SelfDependingJobException {
+    public void testJobsCannotDependOnThemselves()
+            throws SelfDependingJobException, CircularJobDependencyException {
         String failingCase = "a =>,b =>,c => c";
         List<Job> jobs = JobFactory.extractJobs(failingCase);
 
@@ -41,10 +42,20 @@ public class SchedulerTest {
     }
 
     @Test (expected = CircularJobDependencyException.class)
-    public void testJobsCannotContainCircularDependencies() throws CircularJobDependencyException {
+    public void testJobsCannotContainCircularDependencies()
+            throws CircularJobDependencyException, SelfDependingJobException {
         String failingCase = "a =>,b => c,c => f,d => a,e =>,f => b";
         List<Job> jobs = JobFactory.extractJobs(failingCase);
 
-        JobScheduler.cycleCheck(jobs);
+        JobScheduler.getJobSequence(jobs);
+    }
+
+    @Test
+    public void testJobsWithoutContainCircularDependencies()
+            throws CircularJobDependencyException, SelfDependingJobException {
+        String failingCase = "a =>,b => c,c => f,d => a,e => b,f =>";
+        List<Job> jobs = JobFactory.extractJobs(failingCase);
+
+        JobScheduler.getJobSequence(jobs);
     }
 }
