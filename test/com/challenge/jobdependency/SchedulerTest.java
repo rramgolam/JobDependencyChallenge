@@ -5,8 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class SchedulerTest {
 
@@ -42,11 +41,10 @@ public class SchedulerTest {
     }
 
     @Test (expected = CircularJobDependencyException.class)
-    public void testJobsCannotContainCircularDependencies() throws SelfDependingJobException {
+    public void testJobsCannotContainCircularDependencies() throws CircularJobDependencyException {
         String failingCase = "a =>,b => c,c => f,d => a,e =>,f => b";
         List<Job> jobs = JobFactory.extractJobs(failingCase);
 
-        JobScheduler.getJobSequence(jobs);
-
+        JobScheduler.cycleCheck(jobs);
     }
 }

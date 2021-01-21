@@ -18,4 +18,8 @@ public class JobScheduler {
         return jobSequence;
     }
 
+    protected static void cycleCheck(List<Job> jobs) throws CircularJobDependencyException {
+        throw new CircularJobDependencyException("Stub");
+    }
+
 }
