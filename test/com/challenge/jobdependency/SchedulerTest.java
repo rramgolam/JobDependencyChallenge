@@ -2,6 +2,7 @@ package com.challenge.jobdependency;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -57,5 +58,36 @@ public class SchedulerTest {
         List<Job> jobs = JobFactory.extractJobs(failingCase);
 
         JobScheduler.getJobSequence(jobs);
+        //JobScheduler.printJobs(jobs);
     }
+
+    @Test
+    public void testSortingJobsByDependency()
+            throws SelfDependingJobException, CircularJobDependencyException {
+        List<Job> expected = new ArrayList<>();
+        expected.add(new Job("a"));
+        expected.add(new Job("c"));
+        expected.add(new Job("b"));
+
+        String validCase = "a =>,b => c,c =>";
+        List<Job> jobs = JobFactory.extractJobs(validCase);
+        List<Job> result = JobScheduler.getJobSequence(jobs);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testSortingMoreJobsByDependency()
+            throws SelfDependingJobException, CircularJobDependencyException {
+
+        String validCase = "a =>,b => c,c => f,d => a,e => b,f =>";
+        List<Job> jobs = JobFactory.extractJobs(validCase);
+        List<Job> result = JobScheduler.getJobSequence(jobs);
+
+        assertTrue(result.indexOf(new Job("f")) < result.indexOf(new Job("c")));
+        assertTrue(result.indexOf(new Job("c")) < result.indexOf(new Job("b")));
+        assertTrue(result.indexOf(new Job("b")) < result.indexOf(new Job("e")));
+        assertTrue(result.indexOf(new Job("a")) < result.indexOf(new Job("d")));
+    }
+
 }
