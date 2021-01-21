@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
 public class SchedulerTest {
 
     @Test
-    public void testSequenceConsistingOfASingleJob() {
+    public void testSequenceConsistingOfASingleJob() throws Exception {
         List<Job> jobs = JobFactory.extractJobs("a =>");
 
         List<Job> result = JobScheduler.getJobSequence(jobs);
@@ -20,7 +20,7 @@ public class SchedulerTest {
     }
 
     @Test
-    public void testSequenceConsistingOfMultipleJobs() {
+    public void testSequenceConsistingOfMultipleJobs() throws SelfDependingJobException {
         Job a = new Job("a");
         Job b = new Job("b");
         Job c = new Job("c");
@@ -33,8 +33,11 @@ public class SchedulerTest {
         assertEquals(c, jobs.get(2));
     }
 
-    @Test
-    public void testJobsCannotDependOnThemselves() {
-        fail("Requires Impl.");
+    @Test (expected = SelfDependingJobException.class)
+    public void testJobsCannotDependOnThemselves() throws SelfDependingJobException {
+        String failingCase = "a =>,b =>,c => c";
+        List<Job> jobs = JobFactory.extractJobs(failingCase);
+
+        JobScheduler.getJobSequence(jobs);
     }
 }

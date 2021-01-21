@@ -5,12 +5,17 @@ import java.util.List;
 
 public class JobScheduler {
 
-    public static List<Job> getJobSequence(List<Job> jobs) {
+    public static List<Job> getJobSequence(List<Job> jobs) throws SelfDependingJobException {
 
-        List<Job> result = new ArrayList<>();
-        result.add(new Job("a"));
+        List<Job> jobSequence = new ArrayList<>();
 
-        return result;
+        for (Job job : jobs) {
+            if (job.getDependency() != null && job.getDependency().equals(job))
+                throw new SelfDependingJobException("dfd");
+            jobSequence.add(job);
+        }
+
+        return jobSequence;
     }
 
 }
