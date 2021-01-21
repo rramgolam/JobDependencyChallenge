@@ -1,5 +1,7 @@
 package com.challenge.jobdependency;
 
+import java.util.Objects;
+
 public class Job {
 
     private String id;
@@ -28,5 +30,21 @@ public class Job {
     @Override
     public String toString() {
         return hasDependency() ? getId() + " => " + getDependency() : getId();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == this) return true;
+
+        if (obj instanceof Job) {
+            return this.getId().equals(((Job) obj).getId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
     }
 }

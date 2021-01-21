@@ -70,7 +70,6 @@ public class JobTest {
 
         List<Job> aJob = JobFactory.extractJobs(abcc);
 
-
         assertEquals("a", aJob.get(0).getId());
         assertEquals("b", aJob.get(1).getId());
         assertEquals("c", aJob.get(2).getId());
