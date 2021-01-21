@@ -20,7 +20,6 @@ public class JobScheduler {
         return sortJobs(jobSequence);
     }
 
-
     private static boolean hasCycle(Job head) {
         Job fast = head;
         Job slow = head;
@@ -34,8 +33,6 @@ public class JobScheduler {
         }
         return false;
     }
-
-
 
     public static List<Job> sortJobs(List<Job> jobs) {
         List<Job> result = new ArrayList<>();
@@ -51,12 +48,12 @@ public class JobScheduler {
                     int indexOfDep = result.indexOf(job.getDependency());
                     if (indexOfDep > result.indexOf(job))       // check if already ordered
                     {
-                        result.add(indexOfDep, job);            //prepend existing
+                        result.add(indexOfDep, job);            // prepend existing
                         result.remove(result.lastIndexOf(job));
                     }
 
                 } else {
-                    // add before main
+                    // add before current job
                     int index = result.indexOf(job);
                     result.add(index, job.getDependency());
                 }
