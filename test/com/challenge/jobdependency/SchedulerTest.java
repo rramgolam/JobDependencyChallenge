@@ -40,4 +40,13 @@ public class SchedulerTest {
 
         JobScheduler.getJobSequence(jobs);
     }
+
+    @Test (expected = CircularJobDependencyException.class)
+    public void testJobsCannotContainCircularDependencies() throws SelfDependingJobException {
+        String failingCase = "a =>,b => c,c => f,d => a,e =>,f => b";
+        List<Job> jobs = JobFactory.extractJobs(failingCase);
+
+        JobScheduler.getJobSequence(jobs);
+
+    }
 }
