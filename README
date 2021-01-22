@@ -35,3 +35,4 @@ Job Dependency Challenge
 the Job object (e.g. having dependencies). Next came turning input strings of jobs into actual Job objects.
 Then a Scheduler was made to encapsulate the sorting functionality, validity checks initially here but moved to parser (checks as parsing).
 Once a good coverage of tests were all passing, moved methods where they 'should live' based on their responsibility - aiming for single responsibility for both Classes and Methods, longer methods broken up.
+Note: although examples use single characters to represent jobs, Job ID's should ideally be UUID's or other unique conventions.
