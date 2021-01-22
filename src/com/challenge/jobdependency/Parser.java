@@ -7,12 +7,14 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    protected static List<Job> extractJobs(String input) {
+    protected static List<Job> extractJobs(String input)
+            throws SelfDependingJobException, CircularJobDependencyException {
         List<Job> extractedJobs = new ArrayList<>();
 
         String[] lines = input.split(",");
         for (String line : lines) {
             getJobs(line, extractedJobs);
+            checkValidity(extractedJobs);
         }
 
         return extractedJobs;
@@ -51,4 +53,32 @@ public class Parser {
             }
         }
     }
+
+    private static void checkValidity(List<Job> jobs)
+            throws SelfDependingJobException, CircularJobDependencyException {
+
+        for (Job job : jobs) {
+            if (job.hasDependency()) {
+                if (job.getDependency().equals(job))
+                    throw new SelfDependingJobException("Self dependence found.");
+                if (hasCycle(job))
+                    throw new CircularJobDependencyException("Cycle found.");
+            }
+        }
+    }
+
+    private static boolean hasCycle(Job head) {
+        Job fast = head;
+        Job slow = head;
+
+        while(fast != null && fast.getDependency() != null) {
+            slow = slow.getDependency();                            // 1 hop ahead
+            fast = fast.getDependency().getDependency();            // 2 hops ahead
+
+            if(slow == fast)                                        // caught up - loop
+                return true;
+        }
+        return false;
+    }
+
 }

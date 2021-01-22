@@ -8,7 +8,8 @@ public class JobFactory {
         return new Job(id);
     }
 
-    public static List<Job> getJobs(String input) {
+    public static List<Job> getJobs(String input)
+            throws SelfDependingJobException, CircularJobDependencyException {
         return Parser.extractJobs(input);
     }
 

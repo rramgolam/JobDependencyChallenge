@@ -9,7 +9,8 @@ import static org.junit.Assert.*;
 public class SchedulerTest {
 
     @Test
-    public void testSequenceConsistingOfASingleJob() throws Exception {
+    public void testSequenceConsistingOfASingleJob()
+            throws SelfDependingJobException, CircularJobDependencyException {
         List<Job> jobs = JobFactory.getJobs("a =>");
         List<Job> result = JobScheduler.getJobSequence(jobs);
 
@@ -18,7 +19,8 @@ public class SchedulerTest {
     }
 
     @Test
-    public void testSequenceConsistingOfMultipleJobs() {
+    public void testSequenceConsistingOfMultipleJobs()
+            throws SelfDependingJobException, CircularJobDependencyException {
         Job a = new Job("a");
         Job b = new Job("b");
         Job c = new Job("c");
@@ -75,7 +77,6 @@ public class SchedulerTest {
     @Test
     public void testSortingMoreJobsByDependency()
             throws SelfDependingJobException, CircularJobDependencyException {
-
         String validCase = "a =>,b => c,c => f,d => a,e => b,f =>";
         List<Job> jobs = JobFactory.getJobs(validCase);
         List<Job> result = JobScheduler.getJobSequence(jobs);
@@ -87,5 +88,4 @@ public class SchedulerTest {
 
         JobScheduler.printAllJobs(result);
     }
-
 }

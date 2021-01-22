@@ -37,7 +37,8 @@ public class JobTest {
     }
 
     @Test
-    public void convertSingletonJobStringToObject() {
+    public void convertSingletonJobStringToObject()
+            throws SelfDependingJobException, CircularJobDependencyException {
         String a = "a =>";
         List<Job> job = JobFactory.getJobs(a);
 
@@ -45,7 +46,8 @@ public class JobTest {
     }
 
     @Test
-    public void convertSingletonWithDependencyStringToObjects() {
+    public void convertSingletonWithDependencyStringToObjects()
+            throws SelfDependingJobException, CircularJobDependencyException {
         String ab = "a => b";
         List<Job> jobs = JobFactory.getJobs(ab);
 
@@ -54,7 +56,8 @@ public class JobTest {
     }
 
     @Test
-    public void convertListOfSingletonsWithoutDependenciesStringToObjects() {
+    public void convertListOfSingletonsWithoutDependenciesStringToObjects()
+            throws SelfDependingJobException, CircularJobDependencyException {
         String abc = "a =>,b =>,c =>";
         List<Job> jobs = JobFactory.getJobs(abc);
 
@@ -64,7 +67,8 @@ public class JobTest {
     }
 
     @Test
-    public void convertListOfSingletonsWithDependenciesToObjects() {
+    public void convertListOfSingletonsWithDependenciesToObjects()
+            throws SelfDependingJobException, CircularJobDependencyException {
         String abcc = "a =>,b => c,c =>";
         List<Job> jobs = JobFactory.getJobs(abcc);
 
@@ -77,7 +81,8 @@ public class JobTest {
     }
 
     @Test
-    public void convertLongListOfSingletonsWithValidDepencenciesToObjects() {
+    public void convertLongListOfSingletonsWithValidDepencenciesToObjects()
+            throws SelfDependingJobException, CircularJobDependencyException {
         String structure = "a =>,b => c,c => f,d => a,e => b,f =>";
         List<Job> jobs = JobFactory.getJobs(structure);
 
