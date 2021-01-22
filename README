@@ -1,0 +1,36 @@
+Job Dependency Challenge
+========================
+
+Types of tests
+==============
+    - Job - parsing from string, Job responsibilities.
+    - Scheduler - business logic, scenarios for each case (valid and invalid), error checking for invalid cases (cycles and self dependencies).
+
+Class Breakdown
+===============
+Parser - takes a string argument with jobs and instantiates a list of Job objects.
+       - checks as it parses for cyclic dependencies and self depending jobs - exceptions thrown for each
+            - cycle checks uses tortoise and hare algorithm
+                https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_tortoise_and_hare
+
+JobFactory - creating Job objects and getting Job's from Parser.
+
+JobScheduler - returns a sequence of Job's by order of dependency.
+
+Job - Object representation of a job with dependencies - equals and hashcode methods overridden for bucket optimisation.
+    - Structure similar to that of a single-linked-list (contains link to next).
+
+Notes
+=====
+- Development done using TDD practices - tests written first.
+    - Red Light -> Green Light -> Refactor - iterate
+        - tests are written first, then production code
+        - not write more of a unit test that is sufficient to fail
+        - not write more production code that is sufficient to make failing test pass
+    - Optimisation performed after a suite of tests were made with good coverage
+
+- Development started by writing tests to create a Job object, and driving production to encapsulate the requirements of
+the Job object. Next came turning input strings of jobs into actual Job objects. Then a Scheduler was made to encapsulate
+the sorting functionality, validity checks initially here but moved to parser (checks as parsing). Once a good coverage of
+tests were all passing, moved methods where they 'should live' based on their responsibility - aiming for single responsibility
+for both Classes and Methods.
