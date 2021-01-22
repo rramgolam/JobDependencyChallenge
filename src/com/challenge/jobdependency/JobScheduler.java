@@ -33,7 +33,7 @@ public class JobScheduler {
             slow = slow.getDependency();                            // 1 hop ahead
             fast = fast.getDependency().getDependency();            // 2 hops ahead
 
-            if(slow == fast)                                        // slow caught up to fast - loop
+            if(slow == fast)                                        // caught up - loop
                 return true;
         }
         return false;

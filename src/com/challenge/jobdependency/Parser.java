@@ -29,7 +29,7 @@ public class Parser {
         String dependency = null;
 
         while(textMatcher.find()) {
-            first = textMatcher.group(1);               // first arg
+            first = textMatcher.group(1);                       // first arg
             Job firstJob = new Job(first);
 
             if (!extractedJobs.contains(firstJob))
@@ -38,7 +38,7 @@ public class Parser {
             }
 
             if (textMatcher.group(2).strip() != "") {
-                dependency = textMatcher.group(2);      // second arg
+                dependency = textMatcher.group(2);              // second arg
                 Job dependant = new Job(dependency);
                 if (!extractedJobs.contains(dependant)) {       // avoid dups
                     extractedJobs.add(dependant);
