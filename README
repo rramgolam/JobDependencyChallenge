@@ -1,10 +1,6 @@
 Job Dependency Challenge
 ========================
 
---- Types of tests ---
-
-    - Job - parsing from string, Job responsibilities.
-    - Scheduler - business logic, scenarios for each case (valid and invalid), error checking for invalid cases (cycles and self dependencies).
 
 --- Class Breakdown ---
 
@@ -20,6 +16,13 @@ Job Dependency Challenge
     Job - Object representation of a job with dependencies - equals and hashcode methods overridden for bucket optimisation.
         - Structure similar to that of a single-linked-list (contains link to next i.e. dependency).
 
+
+--- Types of tests ---
+
+    Job - parsing from string, Job responsibilities.
+    Scheduler - business logic, scenarios for each case (valid and invalid), error checking for invalid cases (cycles and self dependencies).
+
+
 --- Notes ---
 - Development using TDD practices - tests written first.
     - Red Light -> Green Light -> Refactor - iterate.
@@ -31,5 +34,4 @@ Job Dependency Challenge
 - Development started by writing tests to create a Job object, and driving production to encapsulate the requirements of
 the Job object (e.g. having dependencies). Next came turning input strings of jobs into actual Job objects.
 Then a Scheduler was made to encapsulate the sorting functionality, validity checks initially here but moved to parser (checks as parsing).
-Once a good coverage of tests were all passing, moved methods where they 'should live' based on their responsibility - aiming for single responsibility
-for both Classes and Methods, longer methods broken up.
+Once a good coverage of tests were all passing, moved methods where they 'should live' based on their responsibility - aiming for single responsibility for both Classes and Methods, longer methods broken up.
