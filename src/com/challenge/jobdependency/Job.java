@@ -2,7 +2,7 @@ package com.challenge.jobdependency;
 
 public class Job {
 
-    private String id;
+    private final String id;
     private Job dependency = null;
 
     public Job(String id) {

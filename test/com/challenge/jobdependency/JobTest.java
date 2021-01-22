@@ -79,7 +79,7 @@ public class JobTest {
     }
 
     @Test
-    public void convertLongListOfSingletonsWithValidDepencenciesToObjects()
+    public void convertLongListOfSingletonsWithValidDependenciesToObjects()
             throws SelfDependingJobException, CircularJobDependencyException {
         String structure = "a =>,b => c,c => f,d => a,e => b,f =>";
         List<Job> jobs = JobFactory.getJobs(structure);
