@@ -1,7 +1,6 @@
 package com.challenge.jobdependency;
 
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class SchedulerTest {
     @Test
     public void testSequenceConsistingOfASingleJob() throws Exception {
         List<Job> jobs = JobFactory.getJobs("a =>");
-
         List<Job> result = JobScheduler.getJobSequence(jobs);
+
         assertEquals(1, result.size());
         assertEquals(new Job("a"), result.get(0));
     }
@@ -26,7 +25,6 @@ public class SchedulerTest {
         Job c = new Job("c");
 
         List<Job> jobs = JobFactory.getJobs("a =>,b =>,c =>");
-        List<Job> result = JobScheduler.getJobSequence(jobs);
 
         assertEquals(a, jobs.get(0));
         assertEquals(b, jobs.get(1));
@@ -58,7 +56,6 @@ public class SchedulerTest {
         List<Job> jobs = JobFactory.getJobs(failingCase);
 
         JobScheduler.getJobSequence(jobs);
-        //JobScheduler.printJobs(jobs);
     }
 
     @Test

@@ -7,18 +7,20 @@ public class JobScheduler {
     public static List<Job> getJobSequence(List<Job> jobs)
             throws SelfDependingJobException, CircularJobDependencyException {
 
-        List<Job> jobSequence = new ArrayList<>();
+        checkValidity(jobs);
 
-        // validity checks
+        return sortJobs(jobs);
+    }
+
+    private static void checkValidity(List<Job> jobs)
+            throws SelfDependingJobException, CircularJobDependencyException {
+
         for (Job job : jobs) {
             if (job.getDependency() != null && job.getDependency().equals(job))
                 throw new SelfDependingJobException("Self dependence found.");
             if (job.hasDependency() && hasCycle(job))
                 throw new CircularJobDependencyException("Cycle found.");
-            jobSequence.add(job);
         }
-
-        return sortJobs(jobSequence);
     }
 
     private static boolean hasCycle(Job head) {
