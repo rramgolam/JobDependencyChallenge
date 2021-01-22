@@ -14,7 +14,6 @@ public class Parser {
         for (String line : lines) {
             getJobs(line, extractedJobs);
         }
-        //extractedJobs.forEach(System.out::println);
 
         return extractedJobs;
     }
@@ -30,8 +29,7 @@ public class Parser {
         String dependency = null;
 
         while(textMatcher.find()) {
-            //System.out.println("Occurrence: " + textMatcher.group(0) + " , " + textMatcher.group(1) + textMatcher.group(2));
-            first = textMatcher.group(1);
+            first = textMatcher.group(1);               // first arg
             Job firstJob = new Job(first);
 
             if (!extractedJobs.contains(firstJob))
@@ -40,7 +38,7 @@ public class Parser {
             }
 
             if (textMatcher.group(2).strip() != "") {
-                dependency = textMatcher.group(2);
+                dependency = textMatcher.group(2);      // second arg
                 Job dependant = new Job(dependency);
                 if (!extractedJobs.contains(dependant)) {       // avoid dups
                     extractedJobs.add(dependant);

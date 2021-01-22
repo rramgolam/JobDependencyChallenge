@@ -16,10 +16,12 @@ public class JobScheduler {
             throws SelfDependingJobException, CircularJobDependencyException {
 
         for (Job job : jobs) {
-            if (job.getDependency() != null && job.getDependency().equals(job))
-                throw new SelfDependingJobException("Self dependence found.");
-            if (job.hasDependency() && hasCycle(job))
-                throw new CircularJobDependencyException("Cycle found.");
+            if (job.hasDependency()) {
+                if (job.getDependency().equals(job))
+                    throw new SelfDependingJobException("Self dependence found.");
+                if (hasCycle(job))
+                    throw new CircularJobDependencyException("Cycle found.");
+            }
         }
     }
 
@@ -53,7 +55,6 @@ public class JobScheduler {
                         result.add(indexOfDep, job);                // prepend existing
                         result.remove(result.lastIndexOf(job));
                     }
-
                 } else {
                     // add before current job
                     int index = result.indexOf(job);

@@ -18,8 +18,7 @@ public class SchedulerTest {
     }
 
     @Test
-    public void testSequenceConsistingOfMultipleJobs()
-            throws SelfDependingJobException, CircularJobDependencyException {
+    public void testSequenceConsistingOfMultipleJobs() {
         Job a = new Job("a");
         Job b = new Job("b");
         Job c = new Job("c");
